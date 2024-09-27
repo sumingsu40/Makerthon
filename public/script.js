@@ -55,4 +55,11 @@ document.querySelectorAll('.tab-item').forEach(tab => {
     });
 });
 
+document.getElementById('homeicon').addEventListener('click', function() {
+    window.location.href = 'main.html';
+});
+
+document.getElementById('girdicon').addEventListener('click', function() {
+    window.location.href = 'grid.html';
+});
 
