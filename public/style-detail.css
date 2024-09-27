@@ -1,0 +1,184 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    height: 100vh;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    position: relative;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    flex-grow: 1;
+}
+
+#back-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.multi-tap-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px 0;
+    flex-grow: 1;
+}
+
+.multi-tap-image {
+    width: 40%; /* 이미지의 너비를 설정 */
+    max-width: 200px;
+}
+
+.multi-tap {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 60%;
+}
+
+.socket {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #e9edf1;
+    border-radius: 10px;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.temperature {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.high {
+    color: red;
+}
+
+.warning {
+    font-size: 1.5rem;
+}
+
+/* 네비게이션 바가 이미지 위에 겹치도록 설정 */
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 30px;
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-item {
+    text-align: center;
+    flex: 1;
+}
+
+.nav-item img {
+    width: 30px;
+    height: 30px;
+    opacity: 0.5;
+}
+
+.nav-item.active img {
+    opacity: 1;
+}
+
+.nav-item span {
+    display: block;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+.multi-tap-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px 0;
+}
+
+.multi-tap-image {
+    width: 40%; /* 이미지의 너비 설정 */
+    max-width: 200px;
+}
+
+.multi-tap {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 60%;
+}
+
+.socket {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #e9edf1;
+    border-radius: 10px;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.temperature {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.high {
+    color: red;
+}
+
+.warning {
+    font-size: 1.5rem;
+    display: none; /* 경고 아이콘 기본적으로 숨김 */
+}
