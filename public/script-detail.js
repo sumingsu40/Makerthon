@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Firebase에서 실시간으로 센서 데이터 가져오기
+    // Firebase에서 실시간으로 센서 데이터 및 확인 상태 가져오기
     const sensorRef = ref(database, 'sensor');  // 'sensor' 경로에 있는 데이터를 참조
     onValue(sensorRef, (snapshot) => {
         const data = snapshot.val();
@@ -57,40 +57,61 @@ document.addEventListener('DOMContentLoaded', () => {
         const temp1 = data.temp1;
         const hum1 = data.hum1;
         const flame1 = data.flame1;
+        const userNotAcknowledged1 = data.userNotAcknowledged1;
 
         // 두 번째 노드에 두 번째 온도와 습도 표시, 플레임이 있으면 불꽃 아이콘 표시
         const temp2 = data.temp2;
         const hum2 = data.hum2;
         const flame2 = data.flame2;
+        const userNotAcknowledged2 = data.userNotAcknowledged2;
 
         // 세 번째 노드에 첫 번째와 두 번째의 평균 온도와 습도 표시
         const avgTemp = ((temp1 + temp2) / 2).toFixed(1);
         const avgHum = ((hum1 + hum2) / 2).toFixed(1);
         const flameAvg = flame1 && flame2 ? true : false; // 둘 다 플레임이면 불꽃 표시
 
+        // 플레임 경고가 발생하면 Firebase에 '사용자가확인하지 않음' 상태 저장
+        if (flame1 === 1 && !userNotAcknowledged1) {  // 사용자가 확인하지 않았을 때만
+            sendFlameAlertEmail();
+            set(ref(database, 'sensor/userNotAcknowledged1'), true);  // 이메일 전송 후 상태를 true로 변경
+        }
+        
+        if (flame2 === 1 && !userNotAcknowledged2) {  // 사용자가 확인하지 않았을 때만
+            sendFlameAlertEmail();
+            set(ref(database, 'sensor/userNotAcknowledged2'), true);  // 이메일 전송 후 상태를 true로 변경
+        }
+        
+
         // 첫 번째 소켓 데이터 업데이트
-        updateSocket(socketElements[0], temp1, hum1, flame1);
+        updateSocket(socketElements[0], temp1, hum1, flame1, userNotAcknowledged1, 0);
 
         // 두 번째 소켓 데이터 업데이트
-        updateSocket(socketElements[1], temp2, hum2, flame2);
+        updateSocket(socketElements[1], temp2, hum2, flame2, userNotAcknowledged2, 1);
 
         // 세 번째 소켓 데이터 업데이트 (평균 값)
-        updateSocket(socketElements[2], avgTemp, avgHum, flameAvg);
+        updateSocket(socketElements[2], avgTemp, avgHum, flameAvg, false, 2);
     }
 
     // 소켓 업데이트 함수
-    function updateSocket(socketElement, temperature, humidity, flame) {
+    function updateSocket(socketElement, temperature, humidity, flame, userNotAcknowledged, index) {
         const temperatureSpan = socketElement.querySelector('.temperature');
         const warningIcon = socketElement.querySelector('.warning');
 
         if (temperatureSpan && warningIcon) {
             temperatureSpan.textContent = `${temperature}°C, ${humidity}%`;
 
-            if (flame) {
+            // '사용자가확인하지 않음'이 true일 때는 항상 불꽃 아이콘 표시
+            if (userNotAcknowledged) {
                 warningIcon.style.display = 'inline'; // 불꽃 아이콘 표시
             } else {
                 warningIcon.style.display = 'none'; // 불꽃 아이콘 숨김
             }
+
+            // 사용자가 경고 아이콘을 클릭하면 Firebase에 확인 상태를 false로 업데이트
+            warningIcon.addEventListener('click', () => {
+                set(ref(database, `sensor/userNotAcknowledged${index + 1}`), false); // Firebase에 확인 상태 저장
+                warningIcon.style.display = 'none'; // 아이콘 숨기기
+            });
         } else {
             console.error("Temperature or warning element not found.");
         }
@@ -124,3 +145,26 @@ function setupSwitchListener(switchId, switchPath) {
 setupSwitchListener("switch1", 'switch/status1');
 setupSwitchListener("switch2", 'switch/status2');
 setupSwitchListener("switch3", 'switch/status3');
+
+// 이메일 전송
+function sendFlameAlertEmail() {
+    fetch('http://localhost:3000/send-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            flameDetected: true  // 플레임이 감지되었음을 표시
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Email sent successfully');
+        } else {
+            console.log('Failed to send email');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
