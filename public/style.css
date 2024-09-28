@@ -31,6 +31,15 @@ body {
     padding: 20px;
 }
 
+#back-btn, #menu-btn{
+    background: none;
+    border: none;
+    font-size: 2.5rem; /* 크기 약간 확대 */
+    cursor: pointer;
+    color: #333; /* 텍스트 색상을 어둡게 설정 */
+    z-index: 1001;
+}
+
 header {
     text-align: center;
     padding: 10px 0;
@@ -203,3 +212,11 @@ footer {
     right: 20px;
     bottom: 60px;
 }
+
+.menu-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 10px;
+} 

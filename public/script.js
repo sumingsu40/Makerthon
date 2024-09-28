@@ -56,7 +56,7 @@ document.querySelectorAll('.tab-item').forEach(tab => {
 });
 
 document.getElementById('homeicon').addEventListener('click', function() {
-    window.location.href = 'main.html';
+    window.location.href = 'index.html';
 });
 
 document.getElementById('girdicon').addEventListener('click', function() {

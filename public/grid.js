@@ -37,3 +37,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+document.getElementById('homeicon').addEventListener('click', function() {
+    window.location.href = 'index.html';
+});
+
+document.getElementById('girdicon').addEventListener('click', function() {
+    window.location.href = 'grid.html';
+});

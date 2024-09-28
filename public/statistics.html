@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>전력 소비량 통계</title>
+    <link rel="stylesheet" href="statistics.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button id="back-btn">&larr;</button>
+            <h1>전력 소비량 통계</h1>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab-btn active">월간 사용량</button>
+            <button class="tab-btn">전체</button>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="powerChart"></canvas>
+        </div>
+
+        <div class="usage-info">
+            <p>지난 달 이맘때보다 <strong>250wh</strong> 더 사용했습니다.</p>
+            <div class="estimated-usage">
+                <span>이번 달 예상 전력 소비량</span>
+                <div class="estimated-value">
+                    <input type="text" value="10.9" readonly> Kwh
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="nav-bar">
+                <div class="nav-item active">
+                    <img src="home-icon.png" alt="Home" id="homeicon">
+                </div>
+                <div class="nav-item">
+                    <img src="grid-icon.png" alt="Grid" id="gridicon">
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

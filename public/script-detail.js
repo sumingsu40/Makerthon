@@ -75,10 +75,16 @@ document.addEventListener('DOMContentLoaded', () => {
             sendFlameAlertEmail();
             set(ref(database, 'sensor/userNotAcknowledged1'), true);  // 이메일 전송 후 상태를 true로 변경
         }
+        else {
+            
+        }
         
         if (flame2 === 1 && !userNotAcknowledged2) {  // 사용자가 확인하지 않았을 때만
             sendFlameAlertEmail();
             set(ref(database, 'sensor/userNotAcknowledged2'), true);  // 이메일 전송 후 상태를 true로 변경
+        }
+        else {
+            
         }
         
 
@@ -120,6 +126,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.getElementById('back-btn').addEventListener('click', function () {
     window.history.back(); // 뒤로 가기 버튼을 클릭하면 이전 페이지로 이동
+});
+document.getElementById('menu-btn').addEventListener('click', function () {
+    window.location.href = 'statistics.html';
 });
 
 // 스위치 변경 시 Firebase 업데이트
@@ -171,7 +180,7 @@ function sendFlameAlertEmail() {
 
 
 document.getElementById('homeicon').addEventListener('click', function() {
-    window.location.href = 'main.html';
+    window.location.href = 'index.html';
 });
 
 document.getElementById('girdicon').addEventListener('click', function() {
